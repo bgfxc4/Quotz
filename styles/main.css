@@ -1,0 +1,105 @@
+h1 {
+	color: #FFF;
+	margin-left: 45%
+}
+
+body {
+	background: #34495e;
+}
+
+#add_dot {
+	height: 80px;
+	width: 80px;
+	background-color: #bbb;
+	border-radius: 50%;
+	display: inline-block;
+	position: fixed;
+	right: 30px;
+	bottom: 20px;
+}
+
+#plus_vert {
+	height: 60px;
+	width: 10px;
+	background-color: #FFF;
+	border-radius: 5px;
+	display: inline-block;
+	position: fixed;
+	right: 64px;
+	bottom: 30px;
+}
+
+#plus_hor {
+	height: 10px;
+	width: 60px;
+	background-color: #FFF;
+	border-radius: 5px;
+	display: inline-block;
+	position: fixed;
+	right: 40px;
+	bottom: 53px;
+}
+
+#ret_dot {
+	height: 60px;
+	width: 60px;
+	background-color: #bbb;
+	border-radius: 50%;
+	display: inline-block;
+	position: fixed;
+	left: 30px;
+	top: 20px;
+}
+
+#ret_hor {
+	height: 7px;
+	width: 38px;
+	background-color: #FFF;
+	border-radius: 5px;
+	display: inline-block;
+	position: fixed;
+	left: 43px;
+	top: 48px;
+}
+
+#ret_vert1 {
+	height: 7px;
+	width: 20px;
+	background-color: #FFF;
+	border-radius: 5px;
+	display: inline-block;
+	position: fixed;
+	left: 43px;
+	top: 55px;
+	transform: rotate(45deg);
+}
+
+#ret_vert2 {
+	height: 7px;
+	width: 20px;
+	background-color: #FFF;
+	border-radius: 5px;
+	display: inline-block;
+	position: fixed;
+	left: 43px;
+	top: 41px;
+	transform: rotate(-45deg);
+}
+
+#main_div {
+	width: 100%;
+	align-content: center;
+	text-align: center;
+}
+
+.person_button {	
+	background-color: #FFF;
+	border-radius: 2px;
+	font-size: 30px;
+	margin-bottom: 10px;
+	width: 100% - 40px;
+	margin-left: 20px;
+	margin-right: 20px;
+	display: block;
+	align-content: center;
+}
