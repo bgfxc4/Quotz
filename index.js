@@ -1,6 +1,8 @@
 const STATE = {
 	choose_person: 1,
-	choose_quote: 2
+	rem_person:2,
+	choose_quote: 3,
+	rem_quote: 4
 }
 var current_state = STATE.choose_person;
 var current_loaded_person = undefined;
@@ -42,6 +44,7 @@ function create_quote_button(quote) {
 }
 
 function new_person(name) {
+	if(name == null) return;
 	if(name.trimLeft() == "") {
 		alert("The name cant be an empty string!");
 		return;
@@ -62,7 +65,7 @@ function new_quote(quote) {
 }
 
 function show_return_button() {
-	var main_div = document.getElementById("main_div");
+	var return_div = document.getElementById("return_button");
 	var dot = document.createElement("span");
 	dot.setAttribute("id", "ret_dot");
 	dot.setAttribute("onclick", "ret_button_clicked()");
@@ -75,19 +78,57 @@ function show_return_button() {
 	var vert2 = document.createElement("span");
 	vert2.setAttribute("id", "ret_vert2");
 	vert2.setAttribute("onclick", "ret_button_clicked()");
-	main_div.appendChild(dot);
-	main_div.appendChild(hor);
-	main_div.appendChild(vert1);
-	main_div.appendChild(vert2);
-}
-
-function ret_button_clicked() {
-	document.getElementById("main_div").innerHTML = "";
-	load_persons();
+	return_div.appendChild(dot);
+	return_div.appendChild(hor);
+	return_div.appendChild(vert1);
+	return_div.appendChild(vert2);
 }
 
 function hide_return_button() {
-	document.getElementById("main_div").innerHTML = "";	
+	document.getElementById("return_button").innerHTML = "";	
+}
+
+function ret_button_clicked() {
+	if(current_state == STATE.choose_quote) {
+		document.getElementById("main_div").innerHTML = "";
+		hide_return_button();
+		current_state = STATE.choose_person;
+		load_persons();
+	} else if(current_state == STATE.rem_person) {
+		current_state = STATE.choose_person;
+		hide_return_button();	
+		exit_rem_mode();		
+	} else if(current_state == STATE.rem_quote) {
+		current_state = STATE.choose_quote;
+		exit_rem_mode();	
+	}
+}
+
+function enter_rem_mode() {
+	var all_buttons = document.getElementById("main_div").children;
+	for(var i = 0; i < all_buttons.length; i++) {
+		console.log("enter rem");
+		all_buttons[i].classList.add("red_button");
+	}
+}
+
+function exit_rem_mode() {
+	var all_buttons = document.getElementById("main_div").children;
+	for(var i = 0; i < all_buttons.length; i++) {
+		console.log("exit rem");
+		all_buttons[i].classList.remove("red_button");
+	}
+}
+
+function rem_button_clicked() {
+	if(current_state == STATE.choose_person) {
+		current_state = STATE.rem_person;
+		show_return_button();
+		enter_rem_mode();
+	} else if(current_state == STATE.choose_quote) {
+		current_state = STATE.rem_quote;
+		enter_rem_mode();
+	}
 }
 
 function load_persons_quotes(name) {
@@ -95,9 +136,7 @@ function load_persons_quotes(name) {
 	current_state = STATE.choose_quote;
 	current_loaded_person = name;
 	if(localStorage.getItem(name) == null) localStorage.setItem(name, "");
-	var quotes = decodeURIComponent(localStorage.getItem(name));
-	console.log(quotes);
-	var quotes_splited = quotes.split("|");
+	var quotes_splited = localStorage.getItem(name).split("|");
 	all_persons[get_person_by_name(name)].quotes = quotes_splited;
 	console.log("loading quotes from: " + name + ", quotes: " + quotes_splited);
 	show_return_button();
@@ -106,7 +145,7 @@ function load_persons_quotes(name) {
 	for(var i = 0; i < quotes_splited.length; i++) {
 		var quote = document.createElement("span");
 		quote.setAttribute("class", "person_button");
-		quote.innerHTML = quotes_splited[i];
+		quote.innerHTML = decodeURIComponent(quotes_splited[i]);
 		main_div.appendChild(quote);
 	}
 }
